@@ -54,17 +54,7 @@ public:
 
         // Créer un modèle de cœur (sphère pour le moment)
         // Tu pourras remplacer par un vrai modèle .obj de cœur plus tard
-        //m_HeartModel = MeshGenerator::CreateSphere(1.0f, 36, 18);//cette ligne a été remplacée par le bloc de code qui suit
-
-	/* ------------------Code de remplaceent-----------------------*/
-	std::cout << "Loading heart model..." << std::endl;
-	if (!OBJLoader::LoadOBJ("models/heart.obj", m_HeartModel)) {
-	    std::cout << "Failed to load heart.obj, using sphere fallback" << std::endl;
-	    m_HeartModel = MeshGenerator::CreateSphere(1.0f, 36, 18);
-	} else {
-	    std::cout << "Heart model loaded successfully!" << std::endl;
-	}
-	/*--------------------------------------------------------------*/
+        m_HeartModel = MeshGenerator::CreateSphere(1.0f, 36, 18);
 
         std::cout << "\n=== Controls ===" << std::endl;
         std::cout << "WASD - Move camera" << std::endl;
@@ -114,9 +104,6 @@ public:
         m_HeartBeatTime += static_cast<float>(deltaTime);
         float beat = 1.0f + 0.1f * sinf(m_HeartBeatTime * 2.0f); // Pulsation à 2Hz
         m_HeartScale = beat;
-	
-	// Rotation automatique (NOUVEAU)
-	m_AutoRotationAngle += static_cast<float>(deltaTime) * 30.0f; // 30 degrés par seconde
     }
 
     void Render() override {
@@ -133,13 +120,7 @@ public:
 
         // Matrices
         glm::mat4 model = glm::mat4(1.0f);
-	model = glm::rotate(model, glm::radians(m_AutoRotationAngle), glm::vec3(0.0f, 1.0f, 0.0f)); // Rotation sur Y
         model = glm::scale(model, glm::vec3(m_HeartScale));
-
-	// Teste avec différentes valeurs si le modèle est trop grand/petit :
-	//model = glm::scale(model, glm::vec3(m_HeartScale * 0.5f)); // Réduit de moitié
-	// ou
-	//model = glm::scale(model, glm::vec3(m_HeartScale * 2.0f)); // Double la taille
         
         glm::mat4 view = m_Camera.GetViewMatrix();
         glm::mat4 projection = glm::perspective(
@@ -175,7 +156,6 @@ private:
     glm::vec3 m_ObjectColor = glm::vec3(0.8f, 0.1f, 0.1f); // Rouge par défaut
     float m_HeartBeatTime = 0.0f;
     float m_HeartScale = 1.0f;
-    float m_AutoRotationAngle = 0.0f;//rajout de la variable rotation
 };
 
 // ============================================
