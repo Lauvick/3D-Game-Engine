@@ -1,0 +1,19 @@
+# Build files
+build/
+*.exe
+*.o
+*.obj
+
+# IDE files
+.vscode/
+.vs/
+*.user
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Compiled files
+*.dll
+*.so
+*.dylib
